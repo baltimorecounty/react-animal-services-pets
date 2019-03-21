@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ProfileCard from "./components/ProfileCard";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const App = () => {
+  const pets = [
+    {
+      id: "1",
+      name: "Lucky",
+      stats: [{ species: "Cat" }, { breed: "Domestic Short Hair" }],
+      aboutMe: "I was found on Lee Ben Rd in Kingsville, MD",
+      imageUrl:
+        "//bcgis.baltimorecountymd.gov/LostAdoptPetService/GetPetImageAsJpeg/20190317/A01000001292915MGIH52641O4OQ3F/lucky.PNG"
+    }
+  ];
+
+  return (
+    <div className="profile-card-list">
+      {pets.map(pet => (
+        <ProfileCard key={pet.id} {...pet} />
+      ))}
+    </div>
+  );
+};
 
 export default App;
