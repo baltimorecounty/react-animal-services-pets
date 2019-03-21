@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ProfileCard = props => {
   const { id, name, imageUrl, stats, aboutMe } = props;
@@ -22,10 +23,23 @@ const ProfileCard = props => {
       <img
         className="card-profile-image"
         alt={`This is ${name}, this male is adoptable`}
-        src={imageUrl}
+        src={imageUrl || "//www.rspcavic.org/media/animal/img/84259"}
       />
     </div>
   );
+};
+
+ProfileCard.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  imageUrl: PropTypes.string,
+  aboutMe: PropTypes.string,
+  stats: PropTypes.array
+};
+
+ProfileCard.defaultProps = {
+  imageUrl: "",
+  stats: []
 };
 
 export default ProfileCard;
