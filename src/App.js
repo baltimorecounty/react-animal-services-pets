@@ -22,6 +22,7 @@ const App = () => {
     setFilteredPets(filteredPets);
   }, [selectedPetTypeIndex]);
 
+  
   return (
     <div className="pets-app">
       <Tabs onChange={setSelectedPetTypeIndex}>
