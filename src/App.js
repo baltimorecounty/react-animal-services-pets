@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import ProfileCard from "./components/ProfileCard";
+import { List, ProfileCard } from "./components";
 
 const App = () => {
   const pets = [
@@ -16,9 +16,10 @@ const App = () => {
 
   return (
     <div className="profile-card-list">
-      {pets.map(pet => (
-        <ProfileCard key={pet.id} {...pet} />
-      ))}
+      <List
+        dataSource={pets}
+        renderItem={pet => <ProfileCard key={pet.id} {...pet} />}
+      />
     </div>
   );
 };
