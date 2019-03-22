@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const List = props => {
-  return <p>Test</p>;
+  const { dataSource, renderItem } = props;
+  return <div className="list">{dataSource.map(renderItem)}</div>;
 };
 
 List.propTypes = {
@@ -11,6 +12,7 @@ List.propTypes = {
 };
 
 List.defaultProps = {
+  renderItem: () => {},
   dataSource: []
 };
 
