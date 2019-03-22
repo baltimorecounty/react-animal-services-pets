@@ -3,6 +3,7 @@ import "./App.css";
 import { List, ProfileCard } from "./components";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import dataSource from "./data/pets.json";
+import { petFilter } from "./services/PetService";
 
 const App = () => {
   const petTypes = ["All", "Cat", "Dog", "Other"];
@@ -10,15 +11,10 @@ const App = () => {
   const [filteredPets, setFilteredPets] = useState(dataSource);
   const [selectedPetTypeIndex, setSelectedPetTypeIndex] = useState(0);
 
-  const petFilter = (pet, petType) =>
-    petType === "Other"
-      ? ["Cat", "Dog"].indexOf(pet.species) === -1
-      : petType === pet.species;
-
   const getFilteredPets = petTypeFilter =>
     petTypeFilter && petTypeFilter === "All"
       ? pets
-      : pets.filter(pet => petFilter(pet, petTypeFilter));
+      : pets.filter(pet => petFilter(pet.species, petTypeFilter));
 
   useEffect(() => {
     const petType = petTypes[selectedPetTypeIndex];
