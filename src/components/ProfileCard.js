@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ProfileCard = props => {
-  const { id, name, imageUrl, stats, aboutMe } = props;
+  const { id, name, species, imageUrl, stats, aboutMe } = props;
   return (
     <div className="card card-profile">
       <div className="card-profile-info">
         <h2>{name}</h2>
+        <p>Species: {species}</p>
         {stats.map(stat => {
           const statKey = Object.keys(stat)[0];
           const statVal = stat[statKey];
