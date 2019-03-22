@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "name": "Lucky",
+    "species": "Cat",
+    "stats": [{ "breed": "Domestic Short Hair" }],
+    "aboutMe": "I was found on Lee Ben Rd in Kingsville, MD",
+    "imageUrl": "//bcgis.baltimorecountymd.gov/LostAdoptPetService/GetPetImageAsJpeg/20190317/A01000001292915MGIH52641O4OQ3F/lucky.PNG"
+  },
+  {
+    "id": "2",
+    "name": "Not Lucky",
+    "species": "Dog",
+    "stats": [{ "breed": "Domestic Short Hair" }],
+    "aboutMe": "I was found on Lee Ben Rd in Kingsville, MD",
+    "imageUrl": "//bcgis.baltimorecountymd.gov/LostAdoptPetService/GetPetImageAsJpeg/20190317/A01000001292915MGIH52641O4OQ3F/lucky.PNG"
+  },
+  {
+    "id": "3",
+    "name": "Really Lucky",
+    "species": "Beaver",
+    "stats": [{ "breed": "Domestic Short Hair" }],
+    "aboutMe": "I was found on Lee Ben Rd in Kingsville, MD",
+    "imageUrl": "//bcgis.baltimorecountymd.gov/LostAdoptPetService/GetPetImageAsJpeg/20190317/A01000001292915MGIH52641O4OQ3F/lucky.PNG"
+  },
+  {
+    "id": "4",
+    "name": "Fred",
+    "species": "Dog",
+    "stats": [{ "breed": "Domestic Short Hair" }],
+    "aboutMe": "I was found on Lee Ben Rd in Kingsville, MD",
+    "imageUrl": "//bcgis.baltimorecountymd.gov/LostAdoptPetService/GetPetImageAsJpeg/20190317/A01000001292915MGIH52641O4OQ3F/lucky.PNG"
+  }
+]
