@@ -2,29 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ProfileCard = props => {
-  const { id, name, species, imageUrl, stats, aboutMe } = props;
+  const { AnimalId, Name, Species, AboutMe, ImageUrl, ...rest } = props;
   return (
     <div className="card card-profile">
       <div className="card-profile-info">
-        <h2>{name}</h2>
-        <p>Species: {species}</p>
-        {stats.map(stat => {
-          const statKey = Object.keys(stat)[0];
-          const statVal = stat[statKey];
+        <h2>{Name}</h2>
+        <p>Species: {Species}</p>
+        {Object.keys(rest).map(restKey => {
+          const restVal = rest[restKey];
           return (
-            <p className="pet-info" key={`${id}-${statKey}`}>
-              <strong className="pet-info-label">{statKey}</strong> {statVal}
+            <p className="pet-info" key={`${AnimalId}-${restKey}`}>
+              <strong className="pet-info-label">{restKey}</strong> {restVal}
             </p>
           );
         })}
         <p className="pet-bio">
-          <strong className="pet-bio-label">About Me</strong> {aboutMe}
+          <strong className="pet-bio-label">About Me</strong> {AboutMe}
         </p>
       </div>
       <img
         className="card-profile-image"
-        alt={`This is ${name}, this male is adoptable`}
-        src={imageUrl || "//www.rspcavic.org/media/animal/img/84259"}
+        alt={`This is ${Name}, this male is adoptable`}
+        src={ImageUrl || "//www.rspcavic.org/media/animal/img/84259"}
       />
     </div>
   );
