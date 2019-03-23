@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { List, ProfileCard } from "./components";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
@@ -21,18 +21,19 @@ const App = () => {
       ? pets
       : pets.filter(pet => petFilter(pet.Species, petTypeFilter));
 
-  useEffect(() => {
-    const petType = petTypes[selectedPetTypeIndex];
+  const handleTabChange = selectedTabIndex => {
+    const petType = petTypes[selectedTabIndex];
     const filteredPets = getFilteredPets(petType);
     const updatedPetTabs = Object.assign({}, petTabs);
-    updatedPetTabs[selectedPetTypeIndex] = filteredPets;
+    updatedPetTabs[selectedTabIndex] = filteredPets;
 
+    setSelectedPetTypeIndex(selectedTabIndex);
     setPetTabs(updatedPetTabs);
-  }, [selectedPetTypeIndex]);
+  };
 
   return (
     <div className="pets-app">
-      <Tabs onChange={setSelectedPetTypeIndex}>
+      <Tabs onChange={handleTabChange}>
         <TabList>
           {petTypes.map(petType => (
             <Tab key={petType}>{petType}</Tab>
@@ -40,11 +41,13 @@ const App = () => {
         </TabList>
         <TabPanels>
           {petTypes.map(petType => (
-            <TabPanel key={petType}>
+            <TabPanel key={`tab-panel-${petType}`}>
               <div className="profile-card-list">
                 <List
                   dataSource={petTabs[selectedPetTypeIndex]}
-                  renderItem={pet => <ProfileCard key={pet.id} {...pet} />}
+                  renderItem={pet => (
+                    <ProfileCard key={pet.AnimalId} {...pet} />
+                  )}
                 />
               </div>
             </TabPanel>
