@@ -6,6 +6,11 @@ import { petFilter } from "../services/PetService";
 
 const PetTabs = props => {
   const petTypes = ["All", "Cat", "Dog", "Other"];
+  const routePetType = props.match.params.petType || "All";
+  const selectedTabIndex =
+    petTypes.findIndex(
+      petType => petType.toLowerCase() === routePetType.toLowerCase()
+    ) || 0;
   const initalPetTabs = {};
   petTypes.forEach((type, index) => {
     initalPetTabs[index] = type === "All" ? dataSource.AllPets : [];
@@ -13,7 +18,9 @@ const PetTabs = props => {
 
   const [pets] = useState(dataSource.AllPets);
   const [petTabs, setPetTabs] = useState(initalPetTabs);
-  const [selectedPetTypeIndex, setSelectedPetTypeIndex] = useState(0);
+  const [selectedPetTypeIndex, setSelectedPetTypeIndex] = useState(
+    selectedTabIndex
+  );
 
   const getFilteredPets = petTypeFilter =>
     petTypeFilter && petTypeFilter === "All"
