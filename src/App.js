@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { List, ProfileCard } from "./components";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
@@ -7,24 +7,33 @@ import { petFilter } from "./services/PetService";
 
 const App = () => {
   const petTypes = ["All", "Cat", "Dog", "Other"];
-  const [pets] = useState(dataSource);
-  const [filteredPets, setFilteredPets] = useState(dataSource);
+  const initalPetTabs = {};
+  petTypes.forEach((type, index) => {
+    initalPetTabs[index] = type === "All" ? dataSource.AllPets : [];
+  });
+
+  const [pets] = useState(dataSource.AllPets);
+  const [petTabs, setPetTabs] = useState(initalPetTabs);
   const [selectedPetTypeIndex, setSelectedPetTypeIndex] = useState(0);
 
   const getFilteredPets = petTypeFilter =>
     petTypeFilter && petTypeFilter === "All"
       ? pets
-      : pets.filter(pet => petFilter(pet.species, petTypeFilter));
+      : pets.filter(pet => petFilter(pet.Species, petTypeFilter));
 
-  useEffect(() => {
-    const petType = petTypes[selectedPetTypeIndex];
+  const handleTabChange = selectedTabIndex => {
+    const petType = petTypes[selectedTabIndex];
     const filteredPets = getFilteredPets(petType);
-    setFilteredPets(filteredPets);
-  }, [selectedPetTypeIndex]);
+    const updatedPetTabs = Object.assign({}, petTabs);
+    updatedPetTabs[selectedTabIndex] = filteredPets;
+
+    setSelectedPetTypeIndex(selectedTabIndex);
+    setPetTabs(updatedPetTabs);
+  };
 
   return (
     <div className="pets-app">
-      <Tabs onChange={setSelectedPetTypeIndex}>
+      <Tabs onChange={handleTabChange}>
         <TabList>
           {petTypes.map(petType => (
             <Tab key={petType}>{petType}</Tab>
@@ -32,11 +41,13 @@ const App = () => {
         </TabList>
         <TabPanels>
           {petTypes.map(petType => (
-            <TabPanel key={petType}>
+            <TabPanel key={`tab-panel-${petType}`}>
               <div className="profile-card-list">
                 <List
-                  dataSource={filteredPets}
-                  renderItem={pet => <ProfileCard key={pet.id} {...pet} />}
+                  dataSource={petTabs[selectedPetTypeIndex]}
+                  renderItem={pet => (
+                    <ProfileCard key={pet.AnimalId} {...pet} />
+                  )}
                 />
               </div>
             </TabPanel>
