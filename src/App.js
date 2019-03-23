@@ -6,7 +6,7 @@ import { PetTabs } from "./components";
 const App = () => (
   <Router>
     <div className="pets-app">
-      <Route path="/" exact component={PetTabs} />
+      <Route path="/:petType?" exact component={PetTabs} />
     </div>
   </Router>
 );
