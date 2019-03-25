@@ -1,41 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { List, ProfileCard } from "./index";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
-import dataSource from "../data/pets.json";
-import { petFilter } from "../services/PetService";
+import { getPets } from "../services/PetService";
+
+const petTypes = ["All", "Cat", "Dog", "Other"];
 
 const PetTabs = props => {
-  const petTypes = ["All", "Cat", "Dog", "Other"];
+  //TODO: Ensure routes can are case agnostic
   const routePetType = props.match.params.petType || "All";
-  const selectedTabIndex =
-    petTypes.findIndex(
-      petType => petType.toLowerCase() === routePetType.toLowerCase()
-    ) || 0;
-  const initalPetTabs = {};
-  petTypes.forEach((type, index) => {
-    initalPetTabs[index] = type === "All" ? dataSource.AllPets : [];
-  });
+  const [petTabs, setPetTabs] = useState({});
+  const [selectedTab, setselectedTab] = useState(routePetType);
 
-  const [pets] = useState(dataSource.AllPets);
-  const [petTabs, setPetTabs] = useState(initalPetTabs);
-  const [selectedPetTypeIndex, setSelectedPetTypeIndex] = useState(
-    selectedTabIndex
-  );
+  // REMINDER: This useEffect fetches data and should be updated to React Suspense
+  useEffect(() => {
+    const getPetsPromise = routePetType ? getPets(routePetType) : getPets();
 
-  const getFilteredPets = petTypeFilter =>
-    petTypeFilter && petTypeFilter === "All"
-      ? pets
-      : pets.filter(pet => petFilter(pet.Species, petTypeFilter));
+    getPetsPromise.then(pets => {
+      const petTabsData = petTypes.reduce((dataObj, currentPetTab) => {
+        const hasRouteMatch =
+          routePetType &&
+          routePetType.toLowerCase() === currentPetTab.toLowerCase();
+        const isAllTab = currentPetTab.toLowerCase() === "all";
+
+        dataObj[currentPetTab] =
+          hasRouteMatch || (isAllTab && !routePetType) ? pets : [];
+
+        return dataObj;
+      }, {});
+
+      console.log(petTabsData);
+      setPetTabs(petTabsData);
+    });
+  }, []);
 
   const handleTabChange = selectedTabIndex => {
     const petType = petTypes[selectedTabIndex];
-    const filteredPets = getFilteredPets(petType);
-    const updatedPetTabs = Object.assign({}, petTabs);
-    updatedPetTabs[selectedTabIndex] = filteredPets;
+    getPets(petType)
+      .then(pets => {
+        const updatedPetTabs = Object.assign({}, petTabs);
+        updatedPetTabs[petType] = pets;
 
-    setSelectedPetTypeIndex(selectedTabIndex);
-    setPetTabs(updatedPetTabs);
+        setselectedTab(petType);
+        setPetTabs(updatedPetTabs);
+      })
+      .catch(console.error);
   };
+
   return (
     <Tabs onChange={handleTabChange}>
       <TabList>
@@ -48,7 +58,7 @@ const PetTabs = props => {
           <TabPanel key={`tab-panel-${petType}`}>
             <div className="profile-card-list">
               <List
-                dataSource={petTabs[selectedPetTypeIndex]}
+                dataSource={petTabs[selectedTab]}
                 renderItem={pet => <ProfileCard key={pet.AnimalId} {...pet} />}
               />
             </div>
