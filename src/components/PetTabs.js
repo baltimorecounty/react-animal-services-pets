@@ -6,38 +6,41 @@ import { getPets } from "../services/PetService";
 const petTypes = ["All", "Cat", "Dog", "Other"];
 
 const PetTabs = props => {
-  //TODO: Ensure routes can are case agnostic
-  const routePetType = props.match.params.petType || "All";
+  const routePetType = props.match.params.petType;
+  const defaultIndex = routePetType
+    ? petTypes.findIndex(
+        petType => routePetType.toLowerCase() === petType.toLowerCase()
+      )
+    : 0;
+  const initialSelectedTab = routePetType ? routePetType.toLowerCase() : "all";
   const [petTabs, setPetTabs] = useState({});
-  const [selectedTab, setselectedTab] = useState(routePetType);
+  const [selectedTab, setselectedTab] = useState(initialSelectedTab);
 
   // REMINDER: This useEffect fetches data and should be updated to React Suspense
   useEffect(() => {
-    const getPetsPromise = routePetType ? getPets(routePetType) : getPets();
-
-    getPetsPromise.then(pets => {
+    getPets(selectedTab).then(pets => {
       const petTabsData = petTypes.reduce((dataObj, currentPetTab) => {
+        const petTab = currentPetTab.toLowerCase();
         const hasRouteMatch =
           routePetType &&
           routePetType.toLowerCase() === currentPetTab.toLowerCase();
         const isAllTab = currentPetTab.toLowerCase() === "all";
 
-        dataObj[currentPetTab] =
+        dataObj[petTab] =
           hasRouteMatch || (isAllTab && !routePetType) ? pets : [];
 
         return dataObj;
       }, {});
 
-      console.log(petTabsData);
       setPetTabs(petTabsData);
     });
   }, []);
 
   const handleTabChange = selectedTabIndex => {
-    const petType = petTypes[selectedTabIndex];
+    const petType = petTypes[selectedTabIndex].toLowerCase();
     getPets(petType)
       .then(pets => {
-        const updatedPetTabs = Object.assign({}, petTabs);
+        const updatedPetTabs = { ...petTabs };
         updatedPetTabs[petType] = pets;
 
         setselectedTab(petType);
@@ -47,7 +50,7 @@ const PetTabs = props => {
   };
 
   return (
-    <Tabs onChange={handleTabChange}>
+    <Tabs defaultIndex={defaultIndex} onChange={handleTabChange}>
       <TabList>
         {petTypes.map(petType => (
           <Tab key={petType}>{petType}</Tab>
