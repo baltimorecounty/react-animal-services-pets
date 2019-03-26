@@ -18,35 +18,27 @@ const PetTabs = props => {
 
   // REMINDER: This useEffect fetches data and should be updated to React Suspense
   useEffect(() => {
-    getPets(selectedTab).then(pets => {
-      const petTabsData = petTypes.reduce((dataObj, currentPetTab) => {
-        const petTab = currentPetTab.toLowerCase();
-        const hasRouteMatch =
-          routePetType &&
-          routePetType.toLowerCase() === currentPetTab.toLowerCase();
-        const isAllTab = currentPetTab.toLowerCase() === "all";
+    let didCancel = false;
 
-        dataObj[petTab] =
-          hasRouteMatch || (isAllTab && !routePetType) ? pets : [];
+    getPets(selectedTab)
+      .then(pets => {
+        const petTabsData = { ...petTabs };
+        petTabsData[selectedTab] = pets;
 
-        return dataObj;
-      }, {});
+        if (!didCancel) {
+          setPetTabs(petTabsData);
+        }
+      })
+      .catch(console.error);
 
-      setPetTabs(petTabsData);
-    });
-  }, []);
+    return () => {
+      didCancel = true;
+    };
+  }, [selectedTab]);
 
   const handleTabChange = selectedTabIndex => {
     const petType = petTypes[selectedTabIndex].toLowerCase();
-    getPets(petType)
-      .then(pets => {
-        const updatedPetTabs = { ...petTabs };
-        updatedPetTabs[petType] = pets;
-
-        setselectedTab(petType);
-        setPetTabs(updatedPetTabs);
-      })
-      .catch(console.error);
+    setselectedTab(petType);
   };
 
   return (
