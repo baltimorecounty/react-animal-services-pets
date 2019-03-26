@@ -49,7 +49,6 @@ const PetTabs = props => {
 
   const handleTabChange = selectedTabIndex => {
     const petType = petTypes[selectedTabIndex].toLowerCase();
-    console.log(petType);
     props.history.push(`/${petType}`);
     setSelectedTab(petType);
   };
