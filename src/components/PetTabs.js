@@ -18,9 +18,7 @@ const PetTabs = props => {
             petType => routePetType.toLowerCase() === petType.toLowerCase()
           )
         : 0;
-      const initialSelectedTab = routePetType
-        ? routePetType.toLowerCase()
-        : "all";
+      const initialSelectedTab = petTypes[defaultIndex].toLowerCase();
 
       setSelectedTabIndex(defaultIndex);
       setSelectedTab(initialSelectedTab);
