@@ -6,15 +6,26 @@ import { getPets } from "../services/PetService";
 const petTypes = ["All", "Cat", "Dog", "Other"];
 
 const PetTabs = props => {
-  const routePetType = props.match.params.petType;
-  const defaultIndex = routePetType
-    ? petTypes.findIndex(
-        petType => routePetType.toLowerCase() === petType.toLowerCase()
-      )
-    : 0;
-  const initialSelectedTab = routePetType ? routePetType.toLowerCase() : "all";
   const [petTabs, setPetTabs] = useState({});
-  const [selectedTab, setselectedTab] = useState(initialSelectedTab);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("all");
+
+  useEffect(() => {
+    const routePetType = props.match.params.petType;
+    if (routePetType) {
+      const defaultIndex = routePetType
+        ? petTypes.findIndex(
+            petType => routePetType.toLowerCase() === petType.toLowerCase()
+          )
+        : 0;
+      const initialSelectedTab = routePetType
+        ? routePetType.toLowerCase()
+        : "all";
+
+      setSelectedTabIndex(defaultIndex);
+      setSelectedTab(initialSelectedTab);
+    }
+  });
 
   // REMINDER: This useEffect fetches data and should be updated to React Suspense
   useEffect(() => {
@@ -38,11 +49,13 @@ const PetTabs = props => {
 
   const handleTabChange = selectedTabIndex => {
     const petType = petTypes[selectedTabIndex].toLowerCase();
-    setselectedTab(petType);
+    console.log(petType);
+    props.history.push(`/${petType}`);
+    setSelectedTab(petType);
   };
 
   return (
-    <Tabs defaultIndex={defaultIndex} onChange={handleTabChange}>
+    <Tabs defaultIndex={selectedTabIndex} onChange={handleTabChange}>
       <TabList>
         {petTypes.map(petType => (
           <Tab key={petType}>{petType}</Tab>
