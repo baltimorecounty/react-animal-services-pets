@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { List, ProfileCard } from './index';
+import { List, PetDetails } from './index';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs';
 import { getPets } from '../services/PetService';
 
@@ -15,15 +15,15 @@ const PetTabs = props => {
         if (routePetType) {
             const defaultIndex = petTypes.findIndex(
                 petType => routePetType.toLowerCase() === petType.toLowerCase()
-			);
-			const hasRouteTabMatch = defaultIndex !== -1;
+            );
+            const hasRouteTabMatch = defaultIndex !== -1;
 
-			if (hasRouteTabMatch) {
-				const initialSelectedTab = petTypes[defaultIndex].toLowerCase();
+            if (hasRouteTabMatch) {
+                const initialSelectedTab = petTypes[defaultIndex].toLowerCase();
 
-				setSelectedTabIndex(defaultIndex);
-				setSelectedTab(initialSelectedTab);
-			}
+                setSelectedTabIndex(defaultIndex);
+                setSelectedTab(initialSelectedTab);
+            }
         }
     });
 
@@ -67,7 +67,8 @@ const PetTabs = props => {
                             <List
                                 dataSource={petTabs[selectedTab]}
                                 renderItem={pet => (
-                                    <ProfileCard key={pet.AnimalId} {...pet} />
+                                    <PetDetails key={pet.AnimalId} pet={pet} />
+                                    // <ProfileCard key={pet.AnimalId} {...pet} />
                                 )}
                             />
                         </div>
