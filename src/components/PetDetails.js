@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PetInfoSection as InfoSection } from "./index";
+import { PetInfoSection as InfoSection, SharePetButton } from "./index";
 
 const PetDetails = props => {
   const {
@@ -34,6 +34,7 @@ const PetDetails = props => {
             <p className="pet-bio">
               <strong className="pet-bio-label">About Me</strong> {AboutMe}
             </p>
+            <SharePetButton {...props.pet} />
           </div>
           <div className="col-md-5 col-sm-4">
             <img
