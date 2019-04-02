@@ -1,3 +1,4 @@
 module.exports = {
-  ignore: ["**/components/**/*.test.js", "**/components/**/index.js"]
+  ignore: ["**/components/**/*.test.js", "**/components/**/index.js"],
+  usageMode: "expand"
 };
