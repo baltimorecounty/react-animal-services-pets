@@ -60,20 +60,20 @@ const PetTabs = props => {
       onChange={handleTabChange}
       className={classnames("tabs", props.className)}
     >
-      <TabList>
+      <TabList className="tab-buttons">
         {petTypes.map(petType => (
-          <Tab key={petType}>{petType}</Tab>
+          <Tab key={petType} className="tab-button">
+            {petType}
+          </Tab>
         ))}
       </TabList>
       <TabPanels>
         {petTypes.map(petType => (
-          <TabPanel key={`tab-panel-${petType}`}>
-            <div className="profile-card-list">
-              <List
-                dataSource={petTabs[selectedTab]}
-                renderItem={pet => <PetDetails key={pet.AnimalId} pet={pet} />}
-              />
-            </div>
+          <TabPanel key={`tab-panel-${petType}`} className="tab-panel">
+            <List
+              dataSource={petTabs[selectedTab]}
+              renderItem={pet => <PetDetails key={pet.AnimalId} pet={pet} />}
+            />
           </TabPanel>
         ))}
       </TabPanels>
