@@ -1,5 +1,33 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
+
+const Button = styled.button`
+  background: #4267b2;
+  border: 1px solid #4267b2;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  -webkit-user-select: none;
+  white-space: nowrap;
+  font-size: 13px;
+  height: 28px;
+  padding: 0 4px 0 6px;
+`;
+
+const FacebookShareIcon = styled(FontAwesomeIcon)`
+  background: white;
+  color: #4267b2;
+  display: inline-block;
+  font-size: 10px;
+  margin-right: 5px;
+  padding: 2.5px 5px;
+`;
 
 const FacebookShareButton = props => {
   const { text, url, title, description, thumbnail } = props;
@@ -31,17 +59,22 @@ const FacebookShareButton = props => {
   });
 
   return (
-    <button type="button" onClick={handleClick}>
-      {text}
-    </button>
+    <Button type="button" onClick={handleClick}>
+      <FacebookShareIcon icon={faFacebookF} /> {text}
+    </Button>
   );
 };
 
 FacebookShareButton.propTypes = {
+  /** Button text */
   text: PropTypes.string,
+  /** Url of the item you want to share */
   url: PropTypes.string.isRequired,
+  /** Title that will be displayed  */
   title: PropTypes.string.isRequired,
+  /** A brief description of the item you want to share */
   description: PropTypes.string,
+  /** The image that will be shared with the post */
   thumbnail: PropTypes.string
 };
 
