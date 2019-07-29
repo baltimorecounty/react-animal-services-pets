@@ -11,17 +11,9 @@ const getPetTypeFromRoute = (routePetType) => {
 		const defaultIndex = petTypes.findIndex((petType) => routePetType.toLowerCase() === petType.toLowerCase());
 		const hasRouteTabMatch = defaultIndex !== -1;
 
-		if (hasRouteTabMatch) {
-			const initialSelectedTab = petTypes[defaultIndex].toLowerCase();
-
-			return {
-				index: defaultIndex,
-				petType: initialSelectedTab
-			};
-		}
 		return {
-			index: 0,
-			petType: 'all'
+			index: hasRouteTabMatch ? defaultIndex : 0,
+			petType: hasRouteTabMatch ? petTypes[defaultIndex].toLowerCase() : 'all'
 		};
 	}
 };
