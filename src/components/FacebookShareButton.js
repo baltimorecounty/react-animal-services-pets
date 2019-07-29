@@ -66,10 +66,15 @@ const FacebookShareButton = props => {
 };
 
 FacebookShareButton.propTypes = {
+  /** Button text */
   text: PropTypes.string,
+  /** Url of the item you want to share */
   url: PropTypes.string.isRequired,
+  /** Title that will be displayed  */
   title: PropTypes.string.isRequired,
+  /** A brief description of the item you want to share */
   description: PropTypes.string,
+  /** The image that will be shared with the post */
   thumbnail: PropTypes.string
 };
 
