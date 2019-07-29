@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { List, PetDetails } from "./index";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { getPets } from "../services/PetService";
+import classnames from "classnames";
 
 const petTypes = ["All", "Cat", "Dog", "Other"];
 
@@ -54,21 +55,26 @@ const PetTabs = props => {
   };
 
   return (
-    <Tabs defaultIndex={selectedTabIndex} onChange={handleTabChange}>
-      <TabList>
+    <Tabs
+      defaultIndex={selectedTabIndex}
+      onChange={handleTabChange}
+      className={classnames("tabs", props.className)}
+    >
+      <TabList className="tab-buttons">
         {petTypes.map(petType => (
-          <Tab key={petType}>{petType}</Tab>
+          <Tab key={petType} className="tab-button">
+            {petType}
+          </Tab>
         ))}
       </TabList>
       <TabPanels>
         {petTypes.map(petType => (
-          <TabPanel key={`tab-panel-${petType}`}>
-            <div className="profile-card-list">
-              <List
-                dataSource={petTabs[selectedTab]}
-                renderItem={pet => <PetDetails key={pet.AnimalId} pet={pet} />}
-              />
-            </div>
+          <TabPanel key={`tab-panel-${petType}`} className="tab-panel">
+            <List
+              dataSource={petTabs[selectedTab]}
+			  renderItem={pet => <PetDetails key={pet.AnimalId} pet={pet} />}
+			  itemKey="AnimalId"
+            />
           </TabPanel>
         ))}
       </TabPanels>
