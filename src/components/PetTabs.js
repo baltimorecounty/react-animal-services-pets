@@ -73,6 +73,7 @@ const PetTabs = props => {
             <List
               dataSource={petTabs[selectedTab]}
 			  renderItem={pet => <PetDetails key={pet.AnimalId} pet={pet} />}
+			  itemKey="AnimalId"
             />
           </TabPanel>
         ))}
