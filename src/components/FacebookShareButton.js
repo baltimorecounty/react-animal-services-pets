@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
 const Button = styled.button`
-  background: #4267b2;
-  border: 1px solid #4267b2;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  -webkit-font-smoothing: antialiased;
-  margin: 0;
-  -webkit-user-select: none;
-  white-space: nowrap;
-  font-size: 13px;
-  height: 28px;
-  padding: 0 4px 0 6px;
+	background: #4267b2;
+	border: 1px solid #4267b2;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+	-webkit-user-select: none;
+	white-space: nowrap;
+	font-size: 13px;
+	height: 28px;
+	padding: 0 4px 0 6px;
 `;
 
 const FacebookShareIcon = styled(FontAwesomeIcon)`
@@ -29,57 +29,55 @@ const FacebookShareIcon = styled(FontAwesomeIcon)`
   padding: 2.5px 5px;
 `;
 
-const FacebookShareButton = props => {
-  const { text, url, title, description, thumbnail } = props;
+const FacebookShareButton = (props) => {
+	const { text, url, title, description, thumbnail } = props;
 
-  const handleClick = clickEvent => {
-    window.FB.ui(
-      {
-        method: "share_open_graph",
-        action_type: "og.likes",
-        action_properties: JSON.stringify({
-          object: {
-            "og:url": url,
-            "og:title": title,
-            "og:description": description,
-            "og:image": thumbnail
-          }
-        })
-      },
-      console.log // callback
-    );
-  };
+	const handleClick = (clickEvent) => {
+		window.FB.ui(
+			{
+				method: 'share_open_graph',
+				action_type: 'og.likes',
+				action_properties: JSON.stringify({
+					object: {
+						'og:url': url,
+						'og:title': title,
+						'og:description': description,
+						'og:image': thumbnail
+					}
+				})
+			},
+			console.log // callback
+		);
+	};
 
-  useEffect(() => {
-    if (!window.FB) {
-      console.error(
-        "To use this button must include a reference to https://connect.facebook.net/en_US/sdk.js and initialize the Facebook Javascript API with an AppId"
-      );
-    }
-  });
+	useEffect(() => {
+		if (!window.FB) {
+			console.error(
+				'To use this button must include a reference to https://connect.facebook.net/en_US/sdk.js and initialize the Facebook Javascript API with an AppId'
+			);
+		}
+	});
 
-  return (
-    <Button type="button" onClick={handleClick}>
-      <FacebookShareIcon icon={faFacebookF} /> {text}
-    </Button>
-  );
+	return (
+		<Button type="button" onClick={handleClick}>
+			<FacebookShareIcon icon={faFacebookF} /> {text}
+		</Button>
+	);
 };
 
 FacebookShareButton.propTypes = {
-  /** Button text */
-  text: PropTypes.string,
-  /** Url of the item you want to share */
-  url: PropTypes.string.isRequired,
-  /** Title that will be displayed  */
-  title: PropTypes.string.isRequired,
-  /** A brief description of the item you want to share */
-  description: PropTypes.string,
-  /** The image that will be shared with the post */
-  thumbnail: PropTypes.string
+	/** Button text */
+	text: PropTypes.string,
+	/** Url of the item you want to share */
+	url: PropTypes.string.isRequired,
+	/** A brief description of the item you want to share */
+	description: PropTypes.string,
+	/** The image that will be shared with the post */
+	thumbnail: PropTypes.string
 };
 
 FacebookShareButton.defaultProps = {
-  text: "Share on Facebook"
+	text: 'Share on Facebook'
 };
 
 export default FacebookShareButton;
