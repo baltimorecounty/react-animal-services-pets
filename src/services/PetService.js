@@ -1,13 +1,14 @@
 import axios from 'axios';
+const { REACT_APP_API_HOST: apiBaseUrl, REACT_APP_APP_ANIMAL_STATUS: appPetStatus } = process.env;
 
-const apiBaseUrl = '//localhost:54727/api/pets';
+console.log(process.env);
 
 const getPets = (petType = 'All', status) =>
 	axios
 		.get(`${apiBaseUrl}`, {
 			params: {
 				petType,
-				status
+				status: status || appPetStatus
 			}
 		})
 		.then((response) => response.data.Data)
