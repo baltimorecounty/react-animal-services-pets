@@ -1,52 +1,59 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { PetInfoSection as InfoSection, SharePetButton } from "./index";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { PetInfoSection as InfoSection, SharePetButton } from './index';
+const apiBaseUrl = '//localhost:54727';
 
-const PetDetails = props => {
-  const {
-    AnimalId,
-    Name,
-    Species,
-    Breed,
-    Color,
-    Sex,
-    ShelterArrival,
-    AboutMe,
-    ImageUrl
-  } = props.pet || {};
+const PetDetails = (props) => {
+	const {
+		AnimalId,
+		ImageUrl,
+		DateAdoptedRedeemed: ShelterArrival,
+		Status = '',
+		AnimalName,
+		AboutMe,
+		Attributes = []
+	} =
+		props.pet || {};
+	const animalSex = Attributes.find((x) => x.Label.toLowerCase() === 'sex');
 
-  return (
-    <div id={AnimalId} className="row">
-      {AnimalId && (
-        <div className="pet">
-          <div className="col-md-7 col-sm-8">
-            <h2>
-              <Link to={`/${Species}/${AnimalId}`}>{Name}</Link>
-            </h2>
-            <InfoSection label="Animal ID" value={AnimalId} />
-            <InfoSection label="Species" value={Species} />
-            <InfoSection label="Breed" value={Breed} />
-            <InfoSection label="Color" value={Color} />
-            <InfoSection label="Sex" value={Sex} />
-            <InfoSection label="Spayed/Neutered" value={"TODO"} />
-            <InfoSection label="Shelter Arrival" value={ShelterArrival} />
-            <InfoSection label="Shelter Arrival" value={ShelterArrival} />
-            <p className="pet-bio">
-              <strong className="pet-bio-label">About Me</strong> {AboutMe}
-            </p>
-            <SharePetButton {...props.pet} />
-          </div>
-          <div className="col-md-5 col-sm-4">
-            <img
-              src={ImageUrl}
-              alt={`This is ${Name}, this ${Sex} is adoptable`}
-            />
-          </div>
-        </div>
-      )}
-      {!AnimalId && <p>No pet information was found.</p>}
-    </div>
-  );
+	return (
+		<div id={AnimalId} className="row">
+			{AnimalId ? (
+				<div className="pet">
+					<div className="col-md-7 col-sm-8">
+						<h2>
+							<Link to={`/pets/${AnimalId}/${Status}`}>{AnimalName}</Link>
+						</h2>
+						{Attributes.map(
+							(attribute) =>
+								attribute && attribute.Value ? (
+									<InfoSection
+										key={attribute.Label}
+										label={attribute.Label}
+										value={attribute.Value}
+									/>
+								) : null
+						)}
+						<InfoSection label="Shelter Arrival" value={ShelterArrival} />
+						<p className="pet-bio">
+							<strong className="pet-bio-label">AboutMe</strong> {AboutMe}
+						</p>
+						<SharePetButton title="" {...props.pet} />
+					</div>
+					<div className="col-md-5 col-sm-4">
+						<img
+							src={`${apiBaseUrl}${ImageUrl}`}
+							alt={`This is ${AnimalName}, this ${animalSex
+								? animalSex.Value.toLowerCase()
+								: ''} is ${Status.toLowerCase()}`}
+						/>
+					</div>
+				</div>
+			) : (
+				<p>No pet information was found.</p>
+			)}
+		</div>
+	);
 };
 
 export default PetDetails;
