@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { getValue } from '@baltimorecounty/javascript-utilities/config';
 
-const apiBaseUrl = '//localhost:54727/api/pets';
+const getBaseUrl = () => getValue('apiRoot');
 
 const getPets = (petType = 'All', status) =>
 	axios
-		.get(`${apiBaseUrl}`, {
+		.get(`${getBaseUrl()}`, {
 			params: {
 				petType,
 				status: status || 'Available'
@@ -15,7 +16,7 @@ const getPets = (petType = 'All', status) =>
 
 const getPet = (id, status) =>
 	axios
-		.get(`${apiBaseUrl}/${id}`, {
+		.get(`${getBaseUrl()}/${id}`, {
 			params: {
 				status
 			}
