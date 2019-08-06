@@ -4,18 +4,23 @@ import { setConfig } from '@baltimorecounty/javascript-utilities/config';
 import { PetPage, PetTabs } from './components';
 import './App.css';
 
+const apiBaseRoute = 'api/pets';
 setConfig({
 	local: {
-		apiRoot: '//localhost:54727/api/pets'
+		apiHost: 'localhost:54727',
+		apiRoot: `//localhost:54727/${apiBaseRoute}`
 	},
 	development: {
-		apiRoot: '//testservices.baltimorecountymd.gov/api/pets'
+		apiHost: 'testservices.baltimorecountymd.gov',
+		apiRoot: `//testservices.baltimorecountymd.gov/${apiBaseRoute}`
 	},
 	staging: {
-		apiRoot: '//testservices.baltimorecountymd.gov/api/pets'
+		apiHost: 'testservices.baltimorecountymd.gov',
+		apiRoot: `//testservices.baltimorecountymd.gov/${apiBaseRoute}`
 	},
 	production: {
-		apiRoot: '//services.baltimorecountymd.gov/api/pets'
+		apiHost: 'services.baltimorecountymd.gov',
+		apiRoot: `//services.baltimorecountymd.gov/${apiBaseRoute}`
 	}
 });
 

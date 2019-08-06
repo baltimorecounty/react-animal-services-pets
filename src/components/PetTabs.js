@@ -21,12 +21,14 @@ const getPetTypeFromRoute = (routePetType) => {
 const PetTabs = (props) => {
 	const { petType: routePetType } = props.match.params || {};
 	const { index: selectedTabIndex, petType: selectedPetType } = getPetTypeFromRoute(routePetType) || {};
+	const [ isLoading, setIsLoading ] = useState(false);
 	const [ petTabs, setPetTabs ] = useState({});
 	const [ selectedTab, setSelectedTab ] = useState(selectedPetType);
 
 	// REMINDER: This useEffect fetches data and should be updated to React Suspense
 	useEffect(
 		() => {
+			setIsLoading(true);
 			let didCancel = false;
 
 			getPets(selectedTab)
@@ -37,6 +39,7 @@ const PetTabs = (props) => {
 					if (!didCancel) {
 						setPetTabs(petTabsData);
 					}
+					setIsLoading(false);
 				})
 				.catch(console.error);
 
@@ -63,15 +66,19 @@ const PetTabs = (props) => {
 				))}
 			</TabList>
 			<TabPanels>
-				{petTypes.map((petType) => (
-					<TabPanel key={`tab-panel-${petType}`} className="tab-panel">
-						<List
-							dataSource={petTabs[selectedTab]}
-							renderItem={(pet) => <PetDetails key={pet.AnimalId} pet={pet} />}
-							itemKey="AnimalId"
-						/>
-					</TabPanel>
-				))}
+				{isLoading ? (
+					<p>Loading Pets...</p>
+				) : (
+					petTypes.map((petType) => (
+						<TabPanel key={`tab-panel-${petType}`} className="tab-panel">
+							<List
+								dataSource={petTabs[selectedTab]}
+								renderItem={(pet) => <PetDetails key={pet.AnimalId} pet={pet} />}
+								itemKey="AnimalId"
+							/>
+						</TabPanel>
+					))
+				)}
 			</TabPanels>
 		</Tabs>
 	);

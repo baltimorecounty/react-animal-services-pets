@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getValue } from '@baltimorecounty/javascript-utilities/config';
 import { PetInfoSection as InfoSection, SharePetButton } from './index';
-const apiBaseUrl = '//localhost:54727';
 
 const PetDetails = (props) => {
 	const {
@@ -42,7 +42,7 @@ const PetDetails = (props) => {
 					</div>
 					<div className="col-md-5 col-sm-4">
 						<img
-							src={`${apiBaseUrl}${ImageUrl}`}
+							src={`//${getValue('apiHost')}${ImageUrl}`}
 							alt={`This is ${AnimalName}, this ${animalSex
 								? animalSex.Value.toLowerCase()
 								: ''} is ${Status.toLowerCase()}`}
