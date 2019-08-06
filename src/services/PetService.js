@@ -8,7 +8,7 @@ const getPets = (petType = 'All', status) =>
 		.get(`${getBaseUrl()}`, {
 			params: {
 				petType,
-				status: status || 'Available'
+				status: getValue('animalStatus')
 			}
 		})
 		.then((response) => response.data.Data)
