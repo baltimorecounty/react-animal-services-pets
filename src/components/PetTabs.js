@@ -67,7 +67,9 @@ const PetTabs = (props) => {
 			</TabList>
 			<TabPanels>
 				{isLoading ? (
-					<p>Loading Pets...</p>
+					<TabPanel>
+						<p>Loading Pets...</p>
+					</TabPanel>
 				) : (
 					petTypes.map((petType) => (
 						<TabPanel key={`tab-panel-${petType}`} className="tab-panel">
