@@ -31,7 +31,7 @@ const PetPage = (props) => {
 				<p>Loading Pet ...</p>
 			) : (
 				<div>
-					<Link to="/">View all {status.toLowerCase()} pets</Link>
+					<Link to="/all">View all {status.toLowerCase()} pets</Link>
 					<PetDetails pet={pet} />
 				</div>
 			)}
