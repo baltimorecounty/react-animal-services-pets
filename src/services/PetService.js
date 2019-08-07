@@ -3,7 +3,7 @@ import { getValue } from '@baltimorecounty/javascript-utilities/config';
 
 const getBaseUrl = () => getValue('apiRoot');
 
-const getPets = (petType = 'All', status) =>
+const getPets = (petType = 'All') =>
 	axios
 		.get(`${getBaseUrl()}`, {
 			params: {
