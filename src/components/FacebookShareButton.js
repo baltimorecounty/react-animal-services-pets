@@ -30,7 +30,7 @@ const FacebookShareIcon = styled(FontAwesomeIcon)`
 `;
 
 const FacebookShareButton = (props) => {
-	const { text, url, title, description, thumbnail } = props;
+	const { text = 'Share on Facebook', url, title, description, thumbnail } = props;
 
 	const handleClick = (clickEvent) => {
 		window.FB.ui(
@@ -74,10 +74,6 @@ FacebookShareButton.propTypes = {
 	description: PropTypes.string,
 	/** The image that will be shared with the post */
 	thumbnail: PropTypes.string
-};
-
-FacebookShareButton.defaultProps = {
-	text: 'Share on Facebook'
 };
 
 export default FacebookShareButton;

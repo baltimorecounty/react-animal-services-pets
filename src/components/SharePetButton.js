@@ -2,9 +2,14 @@ import React from 'react';
 import { FacebookShareButton } from './';
 
 const PetShareButton = (props) => {
-	const { Species, AnimalId, Name, ImageUrl, AboutMe } = props;
+	const { status, animalId, name, imageUrl, aboutMe } = props;
 	return (
-		<FacebookShareButton url={`/${Species}/${AnimalId}`} title={Name} thumbnail={ImageUrl} description={AboutMe} />
+		<FacebookShareButton
+			url={`https://baltimorecountymd.gov/pets/${animalId}/${status}`}
+			title={name}
+			thumbnail={imageUrl}
+			description={aboutMe}
+		/>
 	);
 };
 

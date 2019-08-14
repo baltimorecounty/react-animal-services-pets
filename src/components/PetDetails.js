@@ -15,6 +15,7 @@ const PetDetails = (props) => {
 	} =
 		props.pet || {};
 	const animalSex = Attributes.find((x) => x.Label.toLowerCase() === 'sex');
+	const imageUrl = `//${getValue('apiHost')}${ImageUrl}`;
 
 	return (
 		<div id={AnimalId} className="row">
@@ -38,11 +39,17 @@ const PetDetails = (props) => {
 						<p className="pet-bio">
 							<strong className="pet-bio-label">AboutMe</strong> {AboutMe}
 						</p>
-						<SharePetButton title="" {...props.pet} />
+						<SharePetButton
+							animalId={AnimalId}
+							name={AnimalName}
+							imageUrl={imageUrl}
+							aboutMe={AboutMe}
+							status={Status}
+						/>
 					</div>
 					<div className="col-md-5 col-sm-4">
 						<img
-							src={`//${getValue('apiHost')}${ImageUrl}`}
+							src={imageUrl}
 							alt={`This is ${AnimalName}, this ${animalSex
 								? animalSex.Value.toLowerCase()
 								: ''} is ${Status.toLowerCase()}`}
