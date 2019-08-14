@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import { setConfig } from '@baltimorecounty/javascript-utilities/config';
 import { PetPage, PetTabs } from './components';
 import './App.css';
@@ -36,8 +36,9 @@ const App = () => {
 	return (
 		<Router>
 			<div className="pets-app">
-				<Route path="/:petType?" exact component={PetTabs} />
-				<Route path="/pets/:id/:status" exact component={PetPage} />
+				<Route path="/" exact component={PetTabs} />
+				<Route path="/:petType" exact component={PetTabs} />
+				<Route path="/:id/:status" exact component={PetPage} />
 			</div>
 		</Router>
 	);
