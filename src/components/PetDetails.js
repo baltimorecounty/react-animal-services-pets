@@ -23,7 +23,7 @@ const PetDetails = (props) => {
 				<div className="pet">
 					<div className="col-md-7 col-sm-8">
 						<h2>
-							<Link to={`/pets/${AnimalId}/${Status}`}>{AnimalName}</Link>
+							<Link to={`/${AnimalId}/${Status}`}>{AnimalName}</Link>
 						</h2>
 						{Attributes.map(
 							(attribute) =>
